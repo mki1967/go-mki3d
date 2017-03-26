@@ -2,7 +2,6 @@ package mki3d
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
