@@ -43,3 +43,13 @@ func ReadFile(filename string) (*Mki3dType, error) {
 	}
 	return mki3dPtr, nil
 }
+
+// Returns string with JSON representation of  Mki3dType
+func Stringify(data *Mki3dType) (jsonOut string) {
+	mki3dBytes, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+	jsonOut = string(mki3dBytes)
+	return
+}
