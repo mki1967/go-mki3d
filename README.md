@@ -8,4 +8,4 @@ GoDoc links:
 * https://godoc.org/github.com/mki1967/go-mki3d/glmki3d
 
 Examples of usage:
-* https://godoc.org/github.com/mki1967/go-mki3d/mki3d
+* https://github.com/mki1967/test-go-mki3d
