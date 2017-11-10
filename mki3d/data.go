@@ -75,7 +75,7 @@ type SetType struct {
 type Mki3dType struct {
 	Model           ModelType      `json:"model"`
 	View            ViewType       `json:"view"`
-	Projection      ProjectionType `json:"projection`
+	Projection      ProjectionType `json:"projection"`
 	BackgroundColor Vector3dType   `json:"backgroundColor"`
 	Cursor          CursorType     `json:"cursor"`
 	Light           LightType      `json:"light"`
