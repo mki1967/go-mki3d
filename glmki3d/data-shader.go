@@ -334,8 +334,8 @@ func (ds *DataShaderSeg) DrawModel() {
 
 // Draw a model (segments and triangles)
 func (ds *DataShader) DrawModel() {
-	ds.SegPtr.DrawModel()
 	ds.TrPtr.DrawModel()
+	ds.SegPtr.DrawModel()
 }
 
 // Draw a stage (triangles).
