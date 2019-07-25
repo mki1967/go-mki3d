@@ -5,7 +5,6 @@ package mki3d
 //2D vector in MKI3D - used for UV texture coordinates
 type Vector2dType [2]float32
 
-
 // 3D vector in MKI3D - represents coordinates and RGB colors
 type Vector3dType [3]float32
 
