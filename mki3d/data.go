@@ -2,9 +2,6 @@ package mki3d
 
 /* data structures */
 
-//2D vector in MKI3D - used for UV texture coordinates
-type Vector2dType [2]float32
-
 // 3D vector in MKI3D - represents coordinates and RGB colors
 type Vector3dType [3]float32
 
@@ -16,7 +13,6 @@ type EndpointType struct {
 	Position Vector3dType `json:"position"`
 	Color    Vector3dType `json:"color"`
 	Set      int          `json:"set"`
-	// UV       Vector2dType `json:"uv"`
 }
 
 // Segment consists of two endpoints
@@ -86,4 +82,5 @@ type Mki3dType struct {
 	ClipMaxVector   Vector3dType   `json:"clipMaxVector"`
 	ClipMinVector   Vector3dType   `json:"clipMinVector"`
 	Set             SetType        `json:"set"`
+	Texture         TextureType    `json:"texture"`
 }
