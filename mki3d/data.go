@@ -82,5 +82,5 @@ type Mki3dType struct {
 	ClipMaxVector   Vector3dType   `json:"clipMaxVector"`
 	ClipMinVector   Vector3dType   `json:"clipMinVector"`
 	Set             SetType        `json:"set"`
-	Texture         TextureType    `json:"texture"`
+	Texture         *TextureType   `json:"texture"`
 }
