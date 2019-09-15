@@ -45,7 +45,7 @@ func (glBuf *GLBufTr) Delete() {
 // Delete the buffers in GL, when they are not needed any more
 func (glBuf *GLBufSeg) Delete() {
 	vbo := []uint32{glBuf.PositionBuf, glBuf.ColorBuf}
-	gl.DeleteBuffers(3, &vbo[0])
+	gl.DeleteBuffers(2, &vbo[0])
 }
 
 // Delete the buffers in GL, when they are not needed any more
