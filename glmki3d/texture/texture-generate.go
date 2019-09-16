@@ -2,6 +2,7 @@ package texture
 
 import (
 	"github.com/mki1967/go-mki3d/mki3d"
+	"github.com/mki1967/go-mki3d/glmki3d"
 	"math"
 	"strconv"
 )
@@ -38,3 +39,20 @@ func MakeGeneratorVertexShader( def mki3d.TexturionDefType ) string {
 	"}\n"+
 	"\x00";
 }
+
+var GeneratorFragmentShader = `
+#version 330
+in vec4 color;
+out vec4 out_FragColor;
+void main()
+{
+  out_FragColor= color;
+}
+` + "\x00"
+
+// MakeGeneratorShaderProgram makes new GL shader program for generating the texture defined with def and
+// returns its GL ID.
+func MakeGeneratorShaderProgram(def mki3d.TexturionDefType) (program uint32, err error) {
+	return glmki3d.NewProgram( MakeGeneratorVertexShader( def ), GeneratorFragmentShader )
+}
+

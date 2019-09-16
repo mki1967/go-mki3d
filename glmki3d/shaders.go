@@ -98,6 +98,11 @@ func compileShader(source string, shaderType uint32) (uint32, error) {
 	return shader, nil
 }
 
+// NewProgram is just the exporting of newProgram
+func NewProgram(vertexShaderSource, fragmentShaderSource string) (uint32, error) {
+	return newProgram(vertexShaderSource, fragmentShaderSource)
+}
+
 // from https://github.com/go-gl/examples/blob/master/gl41core-cube/cube.go
 func newProgram(vertexShaderSource, fragmentShaderSource string) (uint32, error) {
 	vertexShader, err := compileShader(vertexShaderSource, gl.VERTEX_SHADER)
