@@ -124,9 +124,6 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 
 	gl.UseProgram(renderTextureShaderProgram)
 
-	gl.ActiveTexture(gl.TEXTURE0)
-	gl.BindTexture(gl.TEXTURE_2D, textureId)
-
 	gl.BindFramebuffer(gl.FRAMEBUFFER, frameBufferId)
 	gl.Viewport(0, 0, texSize, texSize)
 
@@ -134,19 +131,22 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 
 	gl.BindBuffer(gl.ARRAY_BUFFER, hBufferId)
 	gl.EnableVertexAttribArray(uint32(hLocation))
-	gl.VertexAttribPointer(uint32(hLocation), 1, gl.FLOAT, false, 0, gl.PtrOffset(0))
 
 	for j := 0; j < texSize+4; j++ {
+		gl.VertexAttribPointer(uint32(hLocation), 1, gl.FLOAT, false, 0, gl.PtrOffset(0)) /// in the loop ?
 		gl.Uniform1f(vLocation, float32(j-2))
 		gl.DrawArrays(gl.POINTS, 0, texSize+4)
 	}
 
 	gl.DisableVertexAttribArray(uint32(hLocation))
 
-	gl.GenerateMipmap(gl.TEXTURE_CUBE_MAP)
+	gl.BindTexture(gl.TEXTURE_2D, textureId)
+	gl.GenerateMipmap(gl.TEXTURE_2D)
 
 	gl.BindFramebuffer(gl.FRAMEBUFFER, uint32(defaultFBO))          // return to default screen FBO
 	gl.Viewport(viewport[0], viewport[1], viewport[2], viewport[3]) // restore viewport
+
+	gl.DeleteProgram(renderTextureShaderProgram) // delete used program
 
 	return textureId, nil
 }
