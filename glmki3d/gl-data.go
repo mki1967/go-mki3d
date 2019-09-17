@@ -84,13 +84,13 @@ func (glBuf *GLBufTr) LoadTriangleBufs(mki3dData *mki3d.Mki3dType) {
 
 	/* transfer data to the GL memory */
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.PositionBuf)
-	gl.BufferData(gl.ARRAY_BUFFER, len(dataPos)*4 /* 4 bytes per flat32 */, gl.Ptr(dataPos), gl.STATIC_DRAW)
+	gl.BufferData(gl.ARRAY_BUFFER, len(dataPos)*4 /* 4 bytes per float32 */, gl.Ptr(dataPos), gl.STATIC_DRAW)
 
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.ColorBuf)
-	gl.BufferData(gl.ARRAY_BUFFER, len(dataCol)*4 /* 4 bytes per flat32 */, gl.Ptr(dataCol), gl.STATIC_DRAW)
+	gl.BufferData(gl.ARRAY_BUFFER, len(dataCol)*4 /* 4 bytes per float32 */, gl.Ptr(dataCol), gl.STATIC_DRAW)
 
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.NormalBuf)
-	gl.BufferData(gl.ARRAY_BUFFER, len(dataNor)*4 /* 4 bytes per flat32 */, gl.Ptr(dataNor), gl.STATIC_DRAW)
+	gl.BufferData(gl.ARRAY_BUFFER, len(dataNor)*4 /* 4 bytes per float32 */, gl.Ptr(dataNor), gl.STATIC_DRAW)
 
 	gl.BindBuffer(gl.ARRAY_BUFFER, 0) // unbind
 }
@@ -114,9 +114,9 @@ func (glBuf *GLBufSeg) LoadSegmentBufs(mki3dData *mki3d.Mki3dType) {
 
 	/* transfer data to the GL memory */
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.PositionBuf)
-	gl.BufferData(gl.ARRAY_BUFFER, len(dataPos)*4 /* 4 bytes per flat32 */, gl.Ptr(dataPos), gl.STATIC_DRAW)
+	gl.BufferData(gl.ARRAY_BUFFER, len(dataPos)*4 /* 4 bytes per float32 */, gl.Ptr(dataPos), gl.STATIC_DRAW)
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.ColorBuf)
-	gl.BufferData(gl.ARRAY_BUFFER, len(dataCol)*4 /* 4 bytes per flat32 */, gl.Ptr(dataCol), gl.STATIC_DRAW)
+	gl.BufferData(gl.ARRAY_BUFFER, len(dataCol)*4 /* 4 bytes per float32 */, gl.Ptr(dataCol), gl.STATIC_DRAW)
 	gl.BindBuffer(gl.ARRAY_BUFFER, 0) // unbind
 }
 

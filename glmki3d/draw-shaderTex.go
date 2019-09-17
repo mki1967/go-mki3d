@@ -32,7 +32,6 @@ void main() {
 }
 ` + "\x00"
 
-
 // fragment shader - the same for segments and triangles
 var fragmentShaderTex = `
 #version 330
@@ -47,7 +46,6 @@ void main() {
 }
 ` + "\x00"
 
-
 // structure for mki3d shader for drawing textured triangles
 // with references to attributes and uniform locations.
 type ShaderTex struct {
@@ -56,14 +54,14 @@ type ShaderTex struct {
 	// locations of attributes
 	PositionAttr uint32
 	NormalAttr   uint32
-	TexAttr   uint32
+	TexAttr      uint32
 	// locations of uniforms ( why int32 instead of uint32 ? )
 	ProjectionUni int32
 	ViewUni       int32
 	ModelUni      int32
 	LightUni      int32
 	AmbientUni    int32
-	TexSamplerUni    int32
+	TexSamplerUni int32
 }
 
 // MakeShaderTr compiles  mki3d shader and

@@ -21,10 +21,8 @@ func MakeGeneratorVertexShader(def mki3d.TexturionDefType) string {
 		"float G(float x,float y){ return  " + def.G + "; }\n" +
 		"float B(float x,float y){ return  " + def.B + "; }\n" +
 		"float A(float x,float y){ return  " + def.A + "; }\n" +
-		// "attribute float h;\n"+
 		"layout (location = 0) in float h;\n" +
 		"uniform float v;\n" +
-		// "varying vec4 color;\n"+
 		"out vec4 color;\n" +
 		"void main()\n" +
 		"{\n" +
@@ -92,7 +90,7 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 		for i := 0; i < texSize+4; i++ {
 			hIn[i] = float32(i - 2)
 		}
-		gl.BufferData(gl.ARRAY_BUFFER, len(hIn)*4 /* 4 bytes per flat32 */, gl.Ptr(&hIn[0]), gl.STATIC_DRAW)
+		gl.BufferData(gl.ARRAY_BUFFER, len(hIn)*4 /* 4 bytes per float32 */, gl.Ptr(&hIn[0]), gl.STATIC_DRAW)
 		hBufferIdExists = true
 	}
 
