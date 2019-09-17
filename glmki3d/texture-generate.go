@@ -1,8 +1,8 @@
-package texture
+package glmki3d
 
 import (
 	"github.com/go-gl/gl/v3.3-core/gl"
-	"github.com/mki1967/go-mki3d/glmki3d"
+	// "github.com/mki1967/go-mki3d/glmki3d"
 	"github.com/mki1967/go-mki3d/mki3d"
 	"math"
 	"strconv"
@@ -53,7 +53,7 @@ void main()
 // MakeGeneratorShaderProgram makes new GL shader program for generating the texture defined with def and
 // returns its GL ID.
 func MakeGeneratorShaderProgram(def mki3d.TexturionDefType) (programId uint32, err error) {
-	return glmki3d.NewProgram(MakeGeneratorVertexShader(def), GeneratorFragmentShader)
+	return NewProgram(MakeGeneratorVertexShader(def), GeneratorFragmentShader)
 }
 
 // hBuffer is an auxiliary buffer used for texture generation

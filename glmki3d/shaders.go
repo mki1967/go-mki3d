@@ -229,6 +229,7 @@ func MakeShaderSeg() (shaderPtr *ShaderSeg, err error) {
 type Shader struct {
 	SegPtr *ShaderSeg
 	TrPtr  *ShaderTr
+	TexPtr *ShaderTex
 }
 
 // Creates both shaders at once and returns in Shader structure
@@ -243,6 +244,11 @@ func MakeShader() (shaderPtr *Shader, err error) {
 		return nil, err
 	}
 
-	return &Shader{SegPtr: shaderSeg, TrPtr: shaderTr}, err
+	shaderTex, err := MakeShaderTex()
+	if err != nil {
+		return nil, err
+	}
+
+	return &Shader{SegPtr: shaderSeg, TrPtr: shaderTr, TexPtr: shaderTex}, err
 
 }
