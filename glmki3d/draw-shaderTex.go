@@ -46,7 +46,7 @@ void main() {
 }
 ` + "\x00"
 
-// structure for mki3d shader for drawing textured triangles
+// ShaderTex structure for mki3d shader for drawing textured triangles
 // with references to attributes and uniform locations.
 type ShaderTex struct {
 	// program Id
@@ -64,9 +64,8 @@ type ShaderTex struct {
 	TexSamplerUni int32
 }
 
-// MakeShaderTr compiles  mki3d shader and
-// returns ShaderTr structure with reference to the program and its attributes and uniforms
-// or error
+// MakeShaderTex compiles  mki3d shader for drawing textured triangles and
+// returns pointer to its newly created  ShaderTex structure
 func MakeShaderTex() (shaderPtr *ShaderTex, err error) {
 	program, err := NewProgram(vertexShaderTex, fragmentShaderTex)
 	if err != nil {
