@@ -6,11 +6,19 @@ import (
 	"github.com/mki1967/go-mki3d/mki3d"
 	"math"
 	"strconv"
+	"strings"
 )
 
 const texSize = 256
 
 func MakeGeneratorVertexShader(def mki3d.TexturionDefType) string {
+	test := strings.Join([]string{def.R, def.G, def.B, def.A}, "")
+	if strings.ContainsAny(test, ";}") { // security check failed -> replace with black.
+		def.R = "0.0"
+		def.G = "0.0"
+		def.B = "0.0"
+		def.A = "1.0"
+	}
 	return "" +
 		"const float PI = " + strconv.FormatFloat(math.Pi, 'f', -1, 64) + ";\n" +
 		"const int texSize= " + strconv.Itoa(texSize) + ";\n" +
