@@ -27,6 +27,26 @@ type TexturedTriangleType struct {
 // TexturedTrianglesType is a sequence of TexturedTriangleType
 type TexturedTrianglesType []TexturedTriangleType
 
+// Get the array of triangles of type TrianglesType from TexturedTrianglesType
+func (textured TexturedTrianglesType) GetTriangles() TrianglesType {
+	triangles := make([]TriangleType, 0, len(textured))
+	for _, texTriangle := range textured {
+		triangles = append(triangles, texTriangle.Triangle)
+	}
+	return TrianglesType(triangles)
+}
+
+// Gets array which is a sequence of enpoints' UV coordinates of textured triangles
+func (texTriangles TexturedTrianglesType) GetUVArrays() []float32 {
+	data := make([]float32, 0, 6*len(texTriangles)) // each triangleUV has 3*2 coordinates
+	for _, texTriangle := range texTriangles {
+		for j := 0; j < 3; j++ {
+			data = append(data, texTriangle.TriangleUV[j][0:2]...)
+		}
+	}
+	return data
+}
+
 // TextureElementType is a texture definition with the sequence of triangles textured with this texture.
 type TextureElementType struct {
 	Def               TexturionDefType      `json:"def"`

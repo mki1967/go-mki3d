@@ -78,7 +78,7 @@ func (mki3dData *Mki3dType) GetTriangleArrays() *TriangleArrays {
 
 // Gets array which is a sequence of enpoints' positions coordinates
 func (segments SegmentsType) GetPositionArrays() []float32 {
-	data := make([]float32, 0, 6*len(segments)) // each triangle has 3*3 coordinates
+	data := make([]float32, 0, 6*len(segments)) // each segment has 2*3 coordinates
 	for _, segment := range segments {
 		for j := 0; j < 2; j++ {
 			data = append(data, segment[j].Position[0:3]...)
@@ -89,7 +89,7 @@ func (segments SegmentsType) GetPositionArrays() []float32 {
 
 // Gets array which is a sequence of enpoints' colors coordinates
 func (segments SegmentsType) GetColorArrays() []float32 {
-	data := make([]float32, 0, 6*len(segments)) // each triangle has 3*3 coordinates
+	data := make([]float32, 0, 6*len(segments)) // each segment has 2*3 coordinates
 	for _, segment := range segments {
 		for j := 0; j < 2; j++ {
 			data = append(data, segment[j].Color[0:3]...)
