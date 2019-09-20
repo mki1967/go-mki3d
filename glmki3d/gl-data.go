@@ -83,17 +83,8 @@ func (glBuf *GLBufSeg) LoadSegmentBufs(mki3dData *mki3d.Mki3dType) {
 	if glBuf.VertexCount == 0 {
 		return // do not create empty buffers
 	}
-	dataPos := make([]float32, 0, 6*len(mki3dData.Model.Segments)) // each segment has 2*3 coordinates
-	dataCol := make([]float32, 0, 6*len(mki3dData.Model.Segments)) // each segment has 2*3 coordinates
-	i := 0
-	for _, segment := range mki3dData.Model.Segments {
-		for j := 0; j < 2; j++ {
-			dataPos = append(dataPos, segment[j].Position[0:3]...)
-			dataCol = append(dataCol, segment[j].Color[0:3]...)
-			i = i + 2
-		}
-	}
-
+	dataPos := mki3dData.Model.Segments.GetPositionArrays()
+	dataCol := mki3dData.Model.Segments.GetColorArrays()
 	/* transfer data to the GL memory */
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.PositionBuf)
 	gl.BufferData(gl.ARRAY_BUFFER, len(dataPos)*4 /* 4 bytes per float32 */, gl.Ptr(dataPos), gl.STATIC_DRAW)
