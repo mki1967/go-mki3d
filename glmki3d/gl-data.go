@@ -2,7 +2,7 @@ package glmki3d
 
 import (
 	"github.com/go-gl/gl/v3.3-core/gl"
-	"github.com/go-gl/mathgl/mgl32"
+	// "github.com/go-gl/mathgl/mgl32"
 	"github.com/mki1967/go-mki3d/mki3d"
 )
 
@@ -60,27 +60,9 @@ func (glBuf *GLBufTr) LoadTriangleBufs(mki3dData *mki3d.Mki3dType) {
 	if glBuf.VertexCount == 0 {
 		return // do not create empty buffers
 	}
-	dataPos := make([]float32, 0, 9*len(mki3dData.Model.Triangles)) // each triangle has 3*3 coordinates
-	dataCol := make([]float32, 0, 9*len(mki3dData.Model.Triangles)) // each triangle has 3*3 coordinates
-	dataNor := make([]float32, 0, 9*len(mki3dData.Model.Triangles)) // each triangle has 3*3 coordinates
-	i := 0
-	for _, triangle := range mki3dData.Model.Triangles {
-		// compute normal
-		a := mgl32.Vec3(triangle[0].Position)
-		b := mgl32.Vec3(triangle[1].Position)
-		c := mgl32.Vec3(triangle[2].Position)
-		normal := (b.Sub(a)).Cross(c.Sub(a))
-		if normal.Dot(normal) > 0 {
-			normal = normal.Normalize()
-		}
-		// append to buffers
-		for j := 0; j < 3; j++ {
-			dataPos = append(dataPos, triangle[j].Position[0:3]...)
-			dataCol = append(dataCol, triangle[j].Color[0:3]...)
-			dataNor = append(dataNor, normal[0:3]...)
-			i = i + 3
-		}
-	}
+	dataPos := mki3dData.Model.Triangles.GetPositionArrays()
+	dataCol := mki3dData.Model.Triangles.GetColorArrays()
+	dataNor := mki3dData.Model.Triangles.GetNormalArrays()
 
 	/* transfer data to the GL memory */
 	gl.BindBuffer(gl.ARRAY_BUFFER, glBuf.PositionBuf)
