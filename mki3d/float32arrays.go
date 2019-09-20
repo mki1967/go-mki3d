@@ -25,13 +25,32 @@ type BufferData struct {
 	SegArrPtr *SegmentArrays
 }
 
-// Gets TriangleArrays from mki3dData.
-func (mki3dData *Mki3dType) GetTriangleArrays() *TriangleArrays {
-	dataPos := make([]float32, 0, 9*len(mki3dData.Model.Triangles)) // each triangle has 3*3 coordinates
-	dataCol := make([]float32, 0, 9*len(mki3dData.Model.Triangles)) // each triangle has 3*3 coordinates
-	dataNor := make([]float32, 0, 9*len(mki3dData.Model.Triangles)) // each triangle has 3*3 coordinates
-	i := 0
-	for _, triangle := range mki3dData.Model.Triangles {
+// Gets array which is a sequence of enpoints positions coordinates
+func (triangles TrianglesType) GetPositionArrays() []float32 {
+	data := make([]float32, 0, 9*len(triangles)) // each triangle has 3*3 coordinates
+	for _, triangle := range triangles {
+		for j := 0; j < 3; j++ {
+			data = append(data, triangle[j].Position[0:3]...)
+		}
+	}
+	return data
+}
+
+// Gets array which is a sequence of enpoints colors coordinates
+func (triangles TrianglesType) GetColorArrays() []float32 {
+	data := make([]float32, 0, 9*len(triangles)) // each triangle has 3*3 coordinates
+	for _, triangle := range triangles {
+		for j := 0; j < 3; j++ {
+			data = append(data, triangle[j].Color[0:3]...)
+		}
+	}
+	return data
+}
+
+// Gets array which is a sequence of triangles' normal coordinates repeated for each endpoint
+func (triangles TrianglesType) GetNormalArrays() []float32 {
+	data := make([]float32, 0, 9*len(triangles)) // each triangle has 3*3 coordinates
+	for _, triangle := range triangles {
 		// compute normal
 		a := mgl32.Vec3(triangle[0].Position)
 		b := mgl32.Vec3(triangle[1].Position)
@@ -42,13 +61,19 @@ func (mki3dData *Mki3dType) GetTriangleArrays() *TriangleArrays {
 		}
 		// append to buffers
 		for j := 0; j < 3; j++ {
-			dataPos = append(dataPos, triangle[j].Position[0:3]...)
-			dataCol = append(dataCol, triangle[j].Color[0:3]...)
-			dataNor = append(dataNor, normal[0:3]...)
-			i = i + 3
+			data = append(data, normal[0:3]...)
 		}
 	}
-	return &TriangleArrays{Positions: dataPos, Colors: dataCol, Normals: dataNor}
+	return data
+}
+
+// Gets TriangleArrays from mki3dData.
+func (mki3dData *Mki3dType) GetTriangleArrays() *TriangleArrays {
+	return &TriangleArrays{
+		Positions: mki3dData.Model.Triangles.GetPositionArrays(),
+		Colors:    mki3dData.Model.Triangles.GetColorArrays(),
+		Normals:   mki3dData.Model.Triangles.GetNormalArrays(),
+	}
 }
 
 // Gets SegmentArrays from mki3dData.
