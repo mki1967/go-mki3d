@@ -33,12 +33,18 @@ type DataShader struct {
 	UniPtr   *GLUni           // redundant link to uniforms
 	SegPtr   *DataShaderSeg
 	TrPtr    *DataShaderTr
+	TexPtr   *DataShaderTex
 }
 
 // Deletes GL data bound to the dsPtr when no longer needed
 func (dsPtr *DataShader) DeleteData() {
 	dsPtr.SegPtr.BufPtr.Delete()
 	dsPtr.TrPtr.BufPtr.Delete()
+	if( dsPtr.TexPtr != nil ) {
+		for _, texEl := range  dsPtr.TexPtr.DataElements {
+			texEl.Delete()
+		}
+	}
 }
 
 // MakeDataShader creates DataShader with all required substructures for given ShaderSeg and mki3d.Mki3dType.
