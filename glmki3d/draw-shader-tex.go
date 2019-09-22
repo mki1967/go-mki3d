@@ -42,9 +42,9 @@ uniform sampler2D texSampler;
 /* fragment color output */
 out vec4 outputColor;
 void main() {
-     // outputColor = vec4(texUVS.z*texture2D(texSampler, texUVS.xy).rgb, 1.0) ;
+     outputColor = vec4(texUVS.z*texture2D(texSampler, texUVS.xy).rgb, 1.0) ;
     // outputColor = vec4(texture2D(texSampler, texUVS.xy).rgb, 1.0) ;
-     outputColor = texture2D(texSampler, texUVS.xy) ;
+    // outputColor = texture2D(texSampler, texUVS.xy) ;
     // outputColor = vec4(1.0, 0.0, 0.0, 1.0) ;
 }
 ` + "\x00"

@@ -1,7 +1,7 @@
 package glmki3d
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	// "github.com/mki1967/go-mki3d/glmki3d"
 	"github.com/mki1967/go-mki3d/mki3d"
@@ -63,8 +63,8 @@ void main()
 // returns its GL ID.
 func MakeGeneratorShaderProgram(def mki3d.TexturionDefType) (programId uint32, err error) {
 	vertexShader := MakeGeneratorVertexShader(def)
-	fmt.Printf("vertexShader:\n%v\n", vertexShader)                       //// test
-	fmt.Printf("GeneratorFragmentShader:\n%v\n", GeneratorFragmentShader) //// test
+	// fmt.Printf("vertexShader:\n%v\n", vertexShader)                       //// test
+	// fmt.Printf("GeneratorFragmentShader:\n%v\n", GeneratorFragmentShader) //// test
 	return NewProgram(vertexShader, GeneratorFragmentShader)
 }
 
@@ -151,13 +151,13 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 
 	gl.UseProgram(renderTextureShaderProgram)
 
-	fmt.Printf("frameBufferId = %v\n", frameBufferId)
+	// fmt.Printf("frameBufferId = %v\n", frameBufferId)
 	gl.BindFramebuffer(gl.FRAMEBUFFER, frameBufferId)
 	gl.Viewport(0, 0, texSize, texSize)
 
 	gl.FramebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, textureId, 0)
 
-	fmt.Printf("hBufferId = %v\n", hBufferId)
+	// fmt.Printf("hBufferId = %v\n", hBufferId)
 	// gl.BindBuffer(gl.ARRAY_BUFFER, hBufferId)
 	// gl.EnableVertexAttribArray(uint32(hLocation))
 
@@ -176,6 +176,7 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 	gl.BindFramebuffer(gl.FRAMEBUFFER, uint32(defaultFBO))          // return to default screen FBO
 	gl.Viewport(viewport[0], viewport[1], viewport[2], viewport[3]) // restore viewport
 
+	gl.DeleteVertexArrays(1, &renderTextureVAO)
 	gl.DeleteProgram(renderTextureShaderProgram) // delete used program
 
 	return textureId, nil
