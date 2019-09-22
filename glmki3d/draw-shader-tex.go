@@ -77,7 +77,7 @@ func MakeShaderTex() (shaderPtr *ShaderTex, err error) {
 	// set ProgramId
 	shader.ProgramId = program
 
-	gl.BindFragDataLocation(program, 0, gl.Str("outputColor\x00")) // test
+	// gl.BindFragDataLocation(program, 0, gl.Str("outputColor\x00")) // test
 
 	// set attributes
 	shader.PositionAttr = uint32(gl.GetAttribLocation(program, gl.Str("position\x00")))

@@ -92,7 +92,7 @@ func compileShader(source string, shaderType uint32) (uint32, error) {
 		log := strings.Repeat("\x00", int(logLength+1))
 		gl.GetShaderInfoLog(shader, logLength, nil, gl.Str(log))
 
-		return 0, fmt.Errorf("failed to compile %v: %v", source, log)
+		return 0, fmt.Errorf("failed to compile:\n%v\n:\n%v", source, log)
 	}
 
 	return shader, nil
@@ -130,7 +130,7 @@ func newProgram(vertexShaderSource, fragmentShaderSource string) (uint32, error)
 		log := strings.Repeat("\x00", int(logLength+1))
 		gl.GetProgramInfoLog(program, logLength, nil, gl.Str(log))
 
-		return 0, fmt.Errorf("failed to link program: %v", log)
+		return 0, fmt.Errorf("failed to link program:\n %v", log)
 	}
 
 	gl.DeleteShader(vertexShader)
@@ -170,7 +170,7 @@ func MakeShaderTr() (shaderPtr *ShaderTr, err error) {
 	// set ProgramId
 	shader.ProgramId = program
 
-	gl.BindFragDataLocation(program, 0, gl.Str("outputColor\x00")) // test
+	// gl.BindFragDataLocation(program, 0, gl.Str("outputColor\x00")) // test
 
 	// set attributes
 	shader.PositionAttr = uint32(gl.GetAttribLocation(program, gl.Str("position\x00")))

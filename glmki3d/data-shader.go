@@ -40,8 +40,8 @@ type DataShader struct {
 func (dsPtr *DataShader) DeleteData() {
 	dsPtr.SegPtr.BufPtr.Delete()
 	dsPtr.TrPtr.BufPtr.Delete()
-	if( dsPtr.TexPtr != nil ) {
-		for _, texEl := range  dsPtr.TexPtr.DataElements {
+	if dsPtr.TexPtr != nil {
+		for _, texEl := range dsPtr.TexPtr.DataElements {
 			texEl.Delete()
 		}
 	}
@@ -70,7 +70,12 @@ func MakeDataShader(sPtr *Shader, mPtr *mki3d.Mki3dType) (dsPtr *DataShader, err
 		return nil, err
 	}
 
-	ds := DataShader{SegPtr: segPtr, TrPtr: trPtr, Mki3dPtr: mPtr, UniPtr: uPtr}
+	texPtr, err := MakeDataShaderTex(sPtr.TexPtr, uPtr, mPtr)
+	if err != nil {
+		return nil, err
+	}
+
+	ds := DataShader{SegPtr: segPtr, TrPtr: trPtr, TexPtr: texPtr, Mki3dPtr: mPtr, UniPtr: uPtr}
 
 	return &ds, nil
 
@@ -300,9 +305,12 @@ func (ds *DataShader) InitStage() (err error) {
 	if ds.TrPtr == nil {
 		return errors.New("ds.Mki3dPtr == nil // type *Mki3dType")
 	}
-	err = ds.TrPtr.InitStage()
-	if err != nil {
-		return err
+
+	if ds.TexPtr != nil {
+		err = ds.TexPtr.InitStage()
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -342,10 +350,12 @@ func (ds *DataShaderSeg) DrawModel() {
 func (ds *DataShader) DrawModel() {
 	ds.TrPtr.DrawModel()
 	ds.SegPtr.DrawModel()
+	if ds.TexPtr != nil {
+		ds.TexPtr.DrawModel()
+	}
 }
 
 // Draw a stage (triangles).
-// Use it once before drawing other models in the stage
 func (ds *DataShaderTr) DrawStage() {
 	ds.InitStage()
 	ds.DrawModel()
@@ -358,11 +368,14 @@ func (ds *DataShaderSeg) DrawStage() {
 }
 
 // Draw a stage.
-// Use it once before drawing other models in the stage
+// Use it once before drawing other models in the stage.
 func (ds *DataShader) DrawStage() {
 	// first draw triangles, then segments
 	ds.TrPtr.DrawStage()
 	ds.SegPtr.DrawStage()
+	if ds.TexPtr != nil {
+		ds.TexPtr.DrawStage()
+	}
 }
 
 // InitVAO init the VAO field of ds. ds, ds.ShaderPtr  and ds.BufPtr must be not nil and previously initiated

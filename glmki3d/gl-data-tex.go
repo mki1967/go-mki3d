@@ -94,10 +94,10 @@ func MakeGLDataTexEl(texEl *mki3d.TextureElementType, shaderPtr *ShaderTex) (*GL
 	gl.EnableVertexAttribArray(shaderPtr.PositionAttr)
 	gl.VertexAttribPointer(shaderPtr.PositionAttr, 3, gl.FLOAT, false, 0 /* stride */, gl.PtrOffset(0))
 
-	// bind vertex colors
+	// bind vertex UV
 	gl.BindBuffer(gl.ARRAY_BUFFER, glData.TexUVBuf)
 	gl.EnableVertexAttribArray(shaderPtr.TexAttr)
-	gl.VertexAttribPointer(shaderPtr.TexAttr, 3, gl.FLOAT, false, 0 /* stride */, gl.PtrOffset(0))
+	gl.VertexAttribPointer(shaderPtr.TexAttr, 2, gl.FLOAT, false, 0 /* stride */, gl.PtrOffset(0))
 
 	// bind vertex normals
 	gl.BindBuffer(gl.ARRAY_BUFFER, glData.NormalBuf)

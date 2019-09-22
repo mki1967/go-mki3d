@@ -20,6 +20,7 @@ func MakeGeneratorVertexShader(def mki3d.TexturionDefType) string {
 		def.A = "1.0"
 	}
 	return "" +
+		"#version 330\n" +
 		"const float PI = " + strconv.FormatFloat(math.Pi, 'f', -1, 64) + ";\n" +
 		"const int texSize= " + strconv.Itoa(texSize) + ";\n" +
 		"float G(float x,float y);\n" +
@@ -76,6 +77,8 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 	if err != nil {
 		return 0, err
 	}
+
+	// gl.BindFragDataLocation(renderTextureShaderProgram, 0, gl.Str("out_FragColor\x00")) // test
 
 	/* set vertex attributes locations */
 	hLocation := gl.GetAttribLocation(renderTextureShaderProgram, gl.Str("h\x00"))
