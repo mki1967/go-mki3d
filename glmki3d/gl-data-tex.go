@@ -2,6 +2,7 @@ package glmki3d
 
 import (
 	"errors"
+	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	// "github.com/go-gl/mathgl/mgl32"
 	"github.com/mki1967/go-mki3d/mki3d"
@@ -40,9 +41,11 @@ func (glData *GLDataTexEl) LoadTriangleBufs(texEl *mki3d.TextureElementType) {
 		return // do not create empty buffers
 	}
 	dataPos := triangles.GetPositionArrays()
+	fmt.Printf("dataPos = %v\n", dataPos) //// test
 	dataNor := triangles.GetNormalArrays()
+	fmt.Printf("dataNor = %v\n", dataNor) //// test
 	dataUV := texEl.TexturedTriangles.GetUVArrays()
-
+	fmt.Printf("dataUV = %v\n", dataUV) //// test
 	/* transfer data to the GL memory */
 	gl.BindBuffer(gl.ARRAY_BUFFER, glData.PositionBuf)
 	gl.BufferData(gl.ARRAY_BUFFER, len(dataPos)*4 /* 4 bytes per float32 */, gl.Ptr(dataPos), gl.STATIC_DRAW)

@@ -42,7 +42,10 @@ uniform sampler2D texSampler;
 /* fragment color output */
 out vec4 outputColor;
 void main() {
-    outputColor = vec4(texUVS.z*texture2D(texSampler, texUVS.xy).rgb, 1.0) ;
+     // outputColor = vec4(texUVS.z*texture2D(texSampler, texUVS.xy).rgb, 1.0) ;
+    // outputColor = vec4(texture2D(texSampler, texUVS.xy).rgb, 1.0) ;
+     outputColor = texture2D(texSampler, texUVS.xy) ;
+    // outputColor = vec4(1.0, 0.0, 0.0, 1.0) ;
 }
 ` + "\x00"
 
@@ -80,9 +83,9 @@ func MakeShaderTex() (shaderPtr *ShaderTex, err error) {
 	// gl.BindFragDataLocation(program, 0, gl.Str("outputColor\x00")) // test
 
 	// set attributes
-	shader.PositionAttr = uint32(gl.GetAttribLocation(program, gl.Str("position\x00")))
-	shader.NormalAttr = uint32(gl.GetAttribLocation(program, gl.Str("normal\x00")))
-	shader.TexAttr = uint32(gl.GetAttribLocation(program, gl.Str("texAttr\x00")))
+	shader.PositionAttr = 0 //uint32(gl.GetAttribLocation(program, gl.Str("position\x00")))
+	shader.NormalAttr = 1   // uint32(gl.GetAttribLocation(program, gl.Str("normal\x00")))
+	shader.TexAttr = 2      // uint32(gl.GetAttribLocation(program, gl.Str("texAttr\x00")))
 
 	// set uniforms
 	shader.ProjectionUni = gl.GetUniformLocation(program, gl.Str("projection\x00"))

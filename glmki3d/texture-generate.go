@@ -1,6 +1,7 @@
 package glmki3d
 
 import (
+	"fmt"
 	"github.com/go-gl/gl/v3.3-core/gl"
 	// "github.com/mki1967/go-mki3d/glmki3d"
 	"github.com/mki1967/go-mki3d/mki3d"
@@ -54,13 +55,17 @@ out vec4 out_FragColor;
 void main()
 {
   out_FragColor= color;
+//  out_FragColor= vec4( 1.0, 1.0, 0.0, 1.0) ; // red
 }
 ` + "\x00"
 
 // MakeGeneratorShaderProgram makes new GL shader program for generating the texture defined with def and
 // returns its GL ID.
 func MakeGeneratorShaderProgram(def mki3d.TexturionDefType) (programId uint32, err error) {
-	return NewProgram(MakeGeneratorVertexShader(def), GeneratorFragmentShader)
+	vertexShader := MakeGeneratorVertexShader(def)
+	fmt.Printf("vertexShader:\n%v\n", vertexShader)                       //// test
+	fmt.Printf("GeneratorFragmentShader:\n%v\n", GeneratorFragmentShader) //// test
+	return NewProgram(vertexShader, GeneratorFragmentShader)
 }
 
 // hBuffer is an auxiliary buffer used for texture generation
@@ -105,8 +110,21 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 		hBufferIdExists = true
 	}
 
+	/* init VAO */
+	var renderTextureVAO uint32
+	gl.UseProgram(renderTextureShaderProgram)
+	gl.GenVertexArrays(1, &renderTextureVAO)
+	gl.BindVertexArray(renderTextureVAO)
+
+	gl.BindBuffer(gl.ARRAY_BUFFER, hBufferId)
+	gl.EnableVertexAttribArray(uint32(hLocation))
+	gl.VertexAttribPointer(uint32(hLocation), 1, gl.FLOAT, false, 0, gl.PtrOffset(0))
+	gl.BindVertexArray(0) // unbind VAO
+
 	gl.GenTextures(1, &textureId)
 	/// TO DO: check textureId
+
+	gl.ActiveTexture(gl.TEXTURE0 + 0)
 
 	// set texture type, image and parameters
 	gl.BindTexture(gl.TEXTURE_2D, textureId)
@@ -133,21 +151,24 @@ func GenerateTexture(def mki3d.TexturionDefType) (textureId uint32, err error) {
 
 	gl.UseProgram(renderTextureShaderProgram)
 
+	fmt.Printf("frameBufferId = %v\n", frameBufferId)
 	gl.BindFramebuffer(gl.FRAMEBUFFER, frameBufferId)
 	gl.Viewport(0, 0, texSize, texSize)
 
 	gl.FramebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, textureId, 0)
 
-	gl.BindBuffer(gl.ARRAY_BUFFER, hBufferId)
-	gl.EnableVertexAttribArray(uint32(hLocation))
+	fmt.Printf("hBufferId = %v\n", hBufferId)
+	// gl.BindBuffer(gl.ARRAY_BUFFER, hBufferId)
+	// gl.EnableVertexAttribArray(uint32(hLocation))
 
+	gl.BindVertexArray(renderTextureVAO)
 	for j := 0; j < texSize+4; j++ {
-		gl.VertexAttribPointer(uint32(hLocation), 1, gl.FLOAT, false, 0, gl.PtrOffset(0)) /// in the loop ?
+		// gl.VertexAttribPointer(uint32(hLocation), 1, gl.FLOAT, false, 0, gl.PtrOffset(0)) /// in the loop ?
 		gl.Uniform1f(vLocation, float32(j-2))
 		gl.DrawArrays(gl.POINTS, 0, texSize+4)
 	}
-
-	gl.DisableVertexAttribArray(uint32(hLocation))
+	gl.BindVertexArray(0) // unbind
+	// gl.DisableVertexAttribArray(uint32(hLocation))
 
 	gl.BindTexture(gl.TEXTURE_2D, textureId)
 	gl.GenerateMipmap(gl.TEXTURE_2D)
