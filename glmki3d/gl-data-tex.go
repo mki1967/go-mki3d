@@ -31,6 +31,8 @@ func (glData *GLDataTexEl) Delete() {
 	gl.DeleteBuffers(3, &vbo[0])
 	textures := []uint32{glData.Texture}
 	gl.DeleteTextures(1, &textures[0])
+	gl.DeleteVertexArrays(1, &glData.VAO)
+
 }
 
 // LoadTriangleBufs loads data from mki3dData to the GL buffers referenced by glData

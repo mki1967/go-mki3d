@@ -39,7 +39,9 @@ type DataShader struct {
 // Deletes GL data bound to the dsPtr when no longer needed
 func (dsPtr *DataShader) DeleteData() {
 	dsPtr.SegPtr.BufPtr.Delete()
+	gl.DeleteVertexArrays(1, &dsPtr.SegPtr.VAO)
 	dsPtr.TrPtr.BufPtr.Delete()
+	gl.DeleteVertexArrays(1, &dsPtr.TrPtr.VAO)
 	if dsPtr.TexPtr != nil {
 		for _, texEl := range dsPtr.TexPtr.DataElements {
 			texEl.Delete()
