@@ -50,7 +50,6 @@ func (dsPtr *DataShader) DeleteData() {
 }
 
 // MakeDataShader creates DataShader with all required substructures for given ShaderSeg and mki3d.Mki3dType.
-// Parameters witdh and height (of the display window) are used for computing projection matrix.
 func MakeDataShader(sPtr *Shader, mPtr *mki3d.Mki3dType) (dsPtr *DataShader, err error) {
 	uPtr := MakeGLUni() // uniforms
 	if err != nil {
@@ -84,8 +83,8 @@ func MakeDataShader(sPtr *Shader, mPtr *mki3d.Mki3dType) (dsPtr *DataShader, err
 }
 
 // MakeDataShaderTr either returns a pointer to anewly created DataShaderTr or an error.
-// The parameters should be pointers to existing and initiated objects
-// MakeDataShaderTr inits its VAO
+// The parameters should be pointers to existing and initiated objects.
+// MakeDataShaderTr inits its VAO.
 func MakeDataShaderTr(sPtr *ShaderTr, bPtr *GLBufTr, uPtr *GLUni, mPtr *mki3d.Mki3dType) (dsPtr *DataShaderTr, err error) {
 	if sPtr == nil {
 		return nil, errors.New("sPtr == nil // type *ShaderTr ")
@@ -113,9 +112,9 @@ func MakeDataShaderTr(sPtr *ShaderTr, bPtr *GLBufTr, uPtr *GLUni, mPtr *mki3d.Mk
 
 }
 
-// MakeDataShaderSeg either returns a pointer to anewly created DataShaderTr or an error.
-// The parameters should be pointers to existing and initiated objects
-// MakeDataShaderTr inits its VAO
+// MakeDataShaderSeg either returns a pointer to anewly created DataShaderSeg or an error.
+// The parameters should be pointers to existing and initiated objects.
+// MakeDataShaderSeg inits its VAO.
 func MakeDataShaderSeg(sPtr *ShaderSeg, bPtr *GLBufSeg, uPtr *GLUni, mPtr *mki3d.Mki3dType) (dsPtr *DataShaderSeg, err error) {
 	if sPtr == nil {
 		return nil, errors.New("sPtr == nil // type *ShaderTr ")
@@ -143,7 +142,7 @@ func MakeDataShaderSeg(sPtr *ShaderSeg, bPtr *GLBufSeg, uPtr *GLUni, mPtr *mki3d
 
 }
 
-// UniLightToShader sets  light uniform parameters from ds.UniPtr to ds.ShaderPtr  (both must be not nil and previously initiated)
+// UniLightToShader sets  light uniform parameters from ds.UniPtr to ds.ShaderPtr  (both must be not nil and previously initiated).
 func (ds *DataShaderTr) UniLightToShader() (err error) {
 	if ds.ShaderPtr == nil {
 		return errors.New("ds.ShaderPtr == nil // type *ShaderTr")
@@ -159,7 +158,7 @@ func (ds *DataShaderTr) UniLightToShader() (err error) {
 	return nil
 }
 
-// UniModelToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr
+// UniModelToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr.
 func (ds *DataShaderTr) UniModelToShader() (err error) {
 	if ds.ShaderPtr == nil {
 		return errors.New("ds.ShaderPtr == nil // type *ShaderTr")
@@ -174,7 +173,7 @@ func (ds *DataShaderTr) UniModelToShader() (err error) {
 	return nil
 }
 
-// UniModelToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr
+// UniModelToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr.
 func (ds *DataShaderSeg) UniModelToShader() (err error) {
 	if ds.ShaderPtr == nil {
 		return errors.New("ds.ShaderPtr == nil // type *ShaderTr")
@@ -189,7 +188,7 @@ func (ds *DataShaderSeg) UniModelToShader() (err error) {
 	return nil
 }
 
-// UniViewToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr
+// UniViewToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr.
 func (ds *DataShaderTr) UniViewToShader() (err error) {
 	if ds.ShaderPtr == nil {
 		return errors.New("ds.ShaderPtr == nil // type *ShaderTr")
@@ -234,7 +233,7 @@ func (ds *DataShaderTr) UniProjectionToShader() (err error) {
 	return nil
 }
 
-// UniProjectionToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr
+// UniProjectionToShader sets uniform parameter from ds.UniPtr to ds.ShaderPtr.
 func (ds *DataShaderSeg) UniProjectionToShader() (err error) {
 	if ds.ShaderPtr == nil {
 		return errors.New("ds.ShaderPtr == nil // type *ShaderTr")
@@ -249,7 +248,7 @@ func (ds *DataShaderSeg) UniProjectionToShader() (err error) {
 	return nil
 }
 
-// InitStage initiates stage parameters in ds.ShaderPtr assuming that ds is a stage
+// InitStage initiates stage parameters in ds.ShaderPtr assuming that ds is a stage.
 func (ds *DataShaderTr) InitStage() (err error) {
 	if ds.Mki3dPtr == nil {
 		return errors.New("ds.Mki3dPtr == nil // type *Mki3dType")
@@ -274,7 +273,7 @@ func (ds *DataShaderTr) InitStage() (err error) {
 
 }
 
-// InitStage initiates stage parameters in ds.ShaderPtr assuming that ds is a stage
+// InitStage initiates stage parameters in ds.ShaderPtr assuming that ds is a stage.
 func (ds *DataShaderSeg) InitStage() (err error) {
 	if ds.Mki3dPtr == nil {
 		return errors.New("ds.Mki3dPtr == nil // type *Mki3dType")
@@ -293,7 +292,7 @@ func (ds *DataShaderSeg) InitStage() (err error) {
 	return nil
 }
 
-// InitStage initiates stage parameters assuming that ds is a stage
+// InitStage initiates stage parameters assuming that ds is a stage.
 func (ds *DataShader) InitStage() (err error) {
 	if ds.SegPtr == nil {
 		return errors.New("ds.Mki3dPtr == nil // type *Mki3dType")
@@ -324,7 +323,7 @@ func (ds *DataShader) SetBackgroundColor() {
 	gl.ClearColor(bg[0], bg[1], bg[2], 1.0)
 }
 
-// Draw a model (triangles)
+// Draw a model (triangles).
 func (ds *DataShaderTr) DrawModel() {
 	if ds.BufPtr.VertexCount == 0 {
 		return // nothing to draw
@@ -336,7 +335,7 @@ func (ds *DataShaderTr) DrawModel() {
 	gl.BindVertexArray(0)
 }
 
-// Draw a model (segments)
+// Draw a model (segments).
 func (ds *DataShaderSeg) DrawModel() {
 	if ds.BufPtr.VertexCount == 0 {
 		return // nothing to draw
@@ -348,7 +347,7 @@ func (ds *DataShaderSeg) DrawModel() {
 	gl.BindVertexArray(0)
 }
 
-// Draw a model (segments and triangles)
+// Draw a model (segments and triangles).
 func (ds *DataShader) DrawModel() {
 	ds.TrPtr.DrawModel()
 	ds.SegPtr.DrawModel()
@@ -380,7 +379,7 @@ func (ds *DataShader) DrawStage() {
 	}
 }
 
-// InitVAO init the VAO field of ds. ds, ds.ShaderPtr  and ds.BufPtr must be not nil and previously initiated
+// InitVAO init the VAO field of ds. ds, ds.ShaderPtr  and ds.BufPtr must be not nil and previously initiated.
 func (ds *DataShaderTr) InitVAO() (err error) {
 	if ds == nil {
 		return errors.New("ds == nil // type  *DataShaderTr ")
@@ -419,7 +418,7 @@ func (ds *DataShaderTr) InitVAO() (err error) {
 
 }
 
-// InitVAO init the VAO field of ds. ds, ds.ShaderPtr  and ds.BufPtr must be not nil and previously initiated
+// InitVAO init the VAO field of ds. ds, ds.ShaderPtr  and ds.BufPtr must be not nil and previously initiated.
 func (ds *DataShaderSeg) InitVAO() (err error) {
 	if ds == nil {
 		return errors.New("ds == nil // type  *DataShaderTr ")
