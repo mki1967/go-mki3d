@@ -106,7 +106,7 @@ func MakeDataShaderTr(sPtr *ShaderTr, bPtr *GLBufTr, uPtr *GLUni, mPtr *mki3d.Mk
 		return nil, err
 	}
 
-	ds.InitVAO()
+	///  ds.InitVAO()
 
 	return &ds, nil
 
@@ -136,7 +136,7 @@ func MakeDataShaderSeg(sPtr *ShaderSeg, bPtr *GLBufSeg, uPtr *GLUni, mPtr *mki3d
 		return nil, err
 	}
 
-	ds.InitVAO()
+	/// ds.InitVAO()
 
 	return &ds, nil
 
@@ -305,6 +305,11 @@ func (ds *DataShader) InitStage() (err error) {
 
 	if ds.TrPtr == nil {
 		return errors.New("ds.Mki3dPtr == nil // type *Mki3dType")
+	}
+
+	err = ds.TrPtr.InitStage() /// ???
+	if err != nil {
+		return err
 	}
 
 	if ds.TexPtr != nil {
